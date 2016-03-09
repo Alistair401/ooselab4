@@ -7,6 +7,8 @@ import uk.ac.glasgow.jagora.Trade;
 import uk.ac.glasgow.jagora.TradeException;
 import uk.ac.glasgow.jagora.Trader;
 
+import java.util.Objects;
+
 public class LimitBuyOrder implements BuyOrder {
 	
 	private Trader trader;
@@ -55,7 +57,7 @@ public class LimitBuyOrder implements BuyOrder {
 	public synchronized void satisfyTrade(TickEvent<Trade> tradeEvent) throws TradeException {
 		int tradeQuantity = tradeEvent.getEvent().getQuantity();
 		Double tradePrice = tradeEvent.getEvent().getPrice();
-		if (price < tradePrice){throw new TradeException("Price too high to for BuyOrder");}
+		if (price > tradePrice){throw new TradeException("Price too high to for BuyOrder");}
 		if (quantity < tradeQuantity){throw new TradeException("BuyOrder not big enough to satisfy trade");}
 		else {
 			trader.buyStock(stock, tradeQuantity, tradePrice);
@@ -71,9 +73,30 @@ public class LimitBuyOrder implements BuyOrder {
 	}
 
 	@Override
-	public int compareTo(BuyOrder order) {
-		return price.compareTo(order.getPrice());
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof LimitBuyOrder)) return false;
+
+		LimitBuyOrder that = (LimitBuyOrder) o;
+
+		return trader == that.trader &&
+				Objects.equals(quantity, that.quantity) &&
+				Objects.equals(price, that.price) &&
+				Objects.equals(stock, that.stock);
+
 	}
 
+	@Override
+	public int hashCode() {
+		int result = trader != null ? trader.hashCode() : 0;
+		result = 31 * result + (stock != null ? stock.hashCode() : 0);
+		result = 31 * result + (quantity != null ? quantity.hashCode() : 0);
+		result = 31 * result + (price != null ? price.hashCode() : 0);
+		return result;
+	}
 
+	@Override
+	public int compareTo(BuyOrder order) {
+		return order.getPrice().compareTo(price);
+	}
 }

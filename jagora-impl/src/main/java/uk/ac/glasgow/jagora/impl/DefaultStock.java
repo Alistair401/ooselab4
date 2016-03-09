@@ -20,4 +20,19 @@ public class DefaultStock implements Stock{
 		return name;
 	}
 
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof DefaultStock)) return false;
+
+		DefaultStock that = (DefaultStock) o;
+
+		return name.equals(that.name);
+
+	}
+
+	@Override
+	public int hashCode() {
+		return name.hashCode();
+	}
 }
