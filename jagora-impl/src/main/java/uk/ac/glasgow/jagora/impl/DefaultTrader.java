@@ -20,7 +20,7 @@ public class DefaultTrader implements Trader {
 	private String name;
 	private Double cash;
 	private Integer quantity;
-	private HashMap<Stock, Integer> holding;
+	private HashMap<Stock, Integer> holding = new HashMap<>();
 
 	/**
 	 * Constructs a new instance of default trader with the specified cash and a
@@ -35,6 +35,7 @@ public class DefaultTrader implements Trader {
 		this.name = name;
 		holding.put(stock, quantity);
 		this.cash = cash;
+		this.quantity = quantity;
 	}
 
 	@Override
