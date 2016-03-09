@@ -67,9 +67,10 @@ public class LimitBuyOrder implements BuyOrder {
 
 	@Override
 	public void rollBackTrade(TickEvent<Trade> tradeEvent) throws TradeException {
-		int tradeQauntity = tradeEvent.getEvent().getQuantity();
+		int tradeQuantity = tradeEvent.getEvent().getQuantity();
 		Double tradePrice = tradeEvent.getEvent().getPrice();
-		trader.sellStock(stock,tradeQauntity, tradePrice);
+		trader.sellStock(stock, tradeQuantity, tradePrice);
+		quantity += tradeQuantity;
 	}
 
 	@Override
