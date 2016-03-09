@@ -1,5 +1,7 @@
 package uk.ac.glasgow.jagora.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,11 +16,24 @@ import uk.ac.glasgow.jagora.World;
 
 public class DefaultStockExchange implements StockExchange {
 
-	private Map<Stock,Market> markets;
+	private Map<Stock, Market> markets = new HashMap<Stock, Market>() {
+		@Override
+		public synchronized Market get(Object s) {
+			Market m = super.get(s);
+
+			if (m == null) {
+				m = new ContinuousOrderDrivenMarket((Stock) s, world);
+				super.put(s, m);
+			}
+
+			return m;
+		}
+	};
 	private World world;
-	private List<TickEvent<Trade>> tradeHistory;
+	private List<TickEvent<Trade>> tradeHistory = new ArrayList<>();
 	
 	public DefaultStockExchange(World world){
+		this.world = world;
 	}
 	
 	@Override
@@ -28,22 +43,22 @@ public class DefaultStockExchange implements StockExchange {
 
 	@Override
 	public void placeBuyOrder(BuyOrder buyOrder) {
-		//TODO
+		markets.get(buyOrder.getStock()).placeBuyOrder(buyOrder);
 	}
 
 	@Override
 	public void placeSellOrder(SellOrder sellOrder) {
-		//TODO
+		markets.get(sellOrder.getStock()).placeSellOrder(sellOrder);
 	}
 
 	@Override
 	public void cancelBuyOrder(BuyOrder buyOrder) {
-		//TODO
+		markets.get(buyOrder.getStock()).cancelBuyOrder(buyOrder);
 	}
 
 	@Override
 	public void cancelSellOrder(SellOrder sellOrder) {
-		//TODO
+		markets.get(sellOrder.getStock()).cancelSellOrder(sellOrder);
 	}
 	
 	@Override
