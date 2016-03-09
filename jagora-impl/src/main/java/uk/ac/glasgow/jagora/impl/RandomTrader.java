@@ -1,5 +1,7 @@
 package uk.ac.glasgow.jagora.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -31,13 +33,20 @@ import uk.ac.glasgow.jagora.Trader;
  * @author tws
  *
  */
+
 public class RandomTrader implements Trader {
-
+	
 	private Trader trader;
-
+	private double priceRange;
+	private Integer maxTradeQuantity;
+	private Random random;
+	
 	public RandomTrader(String name, Double cash, Stock stock, Integer quantity,
 						Integer maxTradeQuantity, double priceRange, Random random) {
-		trader = new DefaultTrader(name, cash, stock, quantity);
+		this.trader = new DefaultTrader(name, cash, stock, quantity);
+		this.priceRange = priceRange;
+		this.maxTradeQuantity = maxTradeQuantity;
+		this.random = random;
 	}
 
 	@Override
@@ -52,15 +61,12 @@ public class RandomTrader implements Trader {
 
 	@Override
 	public void sellStock(Stock stock, Integer quantity, Double price) throws TradeException {
-		// TODO Auto-generated method stub
-
+		trader.sellStock(stock, quantity, price);
 	}
 
 	@Override
-	public void buyStock(Stock stock, Integer quantity, Double price)
-			throws TradeException {
-		// TODO Auto-generated method stub
-
+	public void buyStock(Stock stock, Integer quantity, Double price) throws TradeException {
+		trader.sellStock(stock, quantity, price);
 	}
 
 	@Override
@@ -70,13 +76,25 @@ public class RandomTrader implements Trader {
 
 	@Override
 	public void speak(StockExchange stockExchange) {
-		// TODO Auto-generated method stub
-
+		boolean buy = random.nextBoolean();
+		if (buy){
+			List<Stock> holding = new ArrayList<>(trader.getTradingStocks());
+			Stock stock = holding.get(random.nextInt(holding.size()-1));
+			double price = stockExchange.getBestBid(stock) + (random.nextDouble() - 0.5 * priceRange);
+			int quantity = random.nextInt(maxTradeQuantity);
+			stockExchange.placeBuyOrder(new LimitBuyOrder(trader,stock,quantity,price));
+		} else {
+			List<Stock> holding = new ArrayList<>(trader.getTradingStocks());
+			Stock stock = holding.get(random.nextInt(holding.size()-1));
+			double price = stockExchange.getBestBid(stock) + (random.nextDouble() - 0.5 * priceRange);
+			int quantity = random.nextInt(maxTradeQuantity);
+			stockExchange.placeSellOrder(new LimitSellOrder(trader,stock,quantity,price));
+		}
 	}
 
 	@Override
 	public Set<Stock> getTradingStocks() {
-		// TODO Auto-generated method stub
+		// TODO
 		return null;
 	}
 
