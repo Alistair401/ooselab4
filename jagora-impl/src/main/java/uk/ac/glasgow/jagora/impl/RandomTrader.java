@@ -51,8 +51,7 @@ public class RandomTrader implements Trader {
 	}
 
 	@Override
-	public void sellStock(Stock stock, Integer quantity, Double price)
-			throws TradeException {
+	public void sellStock(Stock stock, Integer quantity, Double price) throws TradeException {
 		// TODO Auto-generated method stub
 
 	}
