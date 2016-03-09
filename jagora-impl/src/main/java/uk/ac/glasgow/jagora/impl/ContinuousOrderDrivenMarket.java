@@ -34,6 +34,8 @@ public class ContinuousOrderDrivenMarket implements Market {
 	public ContinuousOrderDrivenMarket(Stock stock, World world) {
 		this.stock = stock;
 		this.world = world;
+		sellBook = new DefaultOrderBook<>(world);
+		buyBook = new DefaultOrderBook<>(world);
 	}
 
 	@Override
@@ -69,14 +71,12 @@ public class ContinuousOrderDrivenMarket implements Market {
 
 	@Override
 	public Double getBestBid() {
-		//TODO
-		return null;
+		return buyBook.getBestOrder().getPrice();
 	}
 
 	@Override
 	public Double getBestOffer() {
-		//TODO
-		return null;
+		return sellBook.getBestOrder().getPrice();
 	}
 
 	@Override
