@@ -35,7 +35,9 @@ public class DefaultStockExchange implements StockExchange {
 	
 	@Override
 	public void doClearing() {
-		//TODO
+		for (Map.Entry<Stock, Market> stockMarketEntry : markets.entrySet()) {
+			tradeHistory.addAll(stockMarketEntry.getValue().doClearing());
+		}
 	}
 
 	@Override
