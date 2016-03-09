@@ -75,6 +75,16 @@ public class DefaultTrader implements Trader {
 	}
 
 	@Override
+	public String toString() {
+		return "DefaultTrader{" +
+				"name='" + name + '\'' +
+				", cash=" + cash +
+				", quantity=" + quantity +
+				", holding=" + holding +
+				'}';
+	}
+
+	@Override
 	public Set<Stock> getTradingStocks() {
 		// TODO
 		return null;

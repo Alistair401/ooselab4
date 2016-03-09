@@ -34,9 +34,9 @@ import uk.ac.glasgow.jagora.Trader;
 public class RandomTrader implements Trader {
 
 	private Trader trader;
-	
+
 	public RandomTrader(String name, Double cash, Stock stock, Integer quantity,
-		Integer maxTradeQuantity, double priceRange, Random random) {
+						Integer maxTradeQuantity, double priceRange, Random random) {
 		trader = new DefaultTrader(name, cash, stock, quantity);
 	}
 
@@ -80,4 +80,10 @@ public class RandomTrader implements Trader {
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		return "RandomTrader{" +
+				"trader=" + trader +
+				'}';
+	}
 }

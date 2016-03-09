@@ -12,14 +12,16 @@ public class DefaultTickEvent<T> implements TickEvent<T> {
 		this.tick = tick;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public int compareTo(TickEvent<T> tickEvent) {
-		if (getTick() < tickEvent.getTick()){
-			return -1;
-		} else if (getTick() > tickEvent.getTick()){
-			return 1;
+		int result = 0;
+
+		if (event instanceof Comparable && tickEvent.getEvent() instanceof Comparable) {
+			result = ((Comparable) event).compareTo(tickEvent.getEvent());
 		}
-		return 0;
+
+		return result != 0 ? result : Long.compare(getTick(), tickEvent.getTick());
 	}
 
 	@Override
@@ -31,9 +33,12 @@ public class DefaultTickEvent<T> implements TickEvent<T> {
 	public Long getTick() {
 		return tick;
 	}
-	
-	public String toString(){
-		//TODO
-		return null;
+
+	@Override
+	public String toString() {
+		return "DefaultTickEvent{" +
+				"event=" + event +
+				", tick=" + tick +
+				'}';
 	}
 }

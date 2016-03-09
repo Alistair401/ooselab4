@@ -34,6 +34,8 @@ public class ContinuousOrderDrivenMarket implements Market {
 	public ContinuousOrderDrivenMarket(Stock stock, World world) {
 		this.stock = stock;
 		this.world = world;
+		sellBook = new DefaultOrderBook<>(world);
+		buyBook = new DefaultOrderBook<>(world);
 	}
 
 	@Override
@@ -44,44 +46,46 @@ public class ContinuousOrderDrivenMarket implements Market {
 	@Override
 	public List<TickEvent<Trade>> doClearing() {
 		//TODO
-		return null;		
+		return null;
 	}
 
 	@Override
 	public void placeBuyOrder(BuyOrder buyOrder) {
-		//TODO
+		buyBook.recordOrder(buyOrder);
 	}
 
 	@Override
 	public void placeSellOrder(SellOrder sellOrder) {
-		//TODO
+		sellBook.recordOrder(sellOrder);
 	}
 
 	@Override
 	public void cancelBuyOrder(BuyOrder buyOrder) {
-		//TODO
+		buyBook.cancelOrder(buyOrder);
 	}
 
 	@Override
 	public void cancelSellOrder(SellOrder sellOrder) {
-		//TODO
+		sellBook.cancelOrder(sellOrder);
 	}
 
 	@Override
 	public Double getBestBid() {
-		//TODO
-		return null;
+		return buyBook.getBestOrder().getPrice();
 	}
 
 	@Override
 	public Double getBestOffer() {
-		//TODO
-		return null;
+		return sellBook.getBestOrder().getPrice();
 	}
-	
+
 	@Override
-	public String toString(){
-		//TODO
-		return null;
+	public String toString() {
+		return "ContinuousOrderDrivenMarket{" +
+				"sellBook=" + sellBook +
+				", buyBook=" + buyBook +
+				", stock=" + stock +
+				", world=" + world +
+				'}';
 	}
 }

@@ -25,10 +25,15 @@ public class LimitSellOrder implements SellOrder {
 	public Double getPrice() {
 		return price;
 	}
-	
-	public String toString(){
-		// TODO
-		return null;
+
+	@Override
+	public String toString() {
+		return "LimitSellOrder{" +
+				"trader=" + trader +
+				", stock=" + stock +
+				", quantity=" + quantity +
+				", price=" + price +
+				'}';
 	}
 
 	@Override
