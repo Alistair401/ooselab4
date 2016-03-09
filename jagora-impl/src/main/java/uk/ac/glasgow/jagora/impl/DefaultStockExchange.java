@@ -1,9 +1,6 @@
 package uk.ac.glasgow.jagora.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import uk.ac.glasgow.jagora.BuyOrder;
 import uk.ac.glasgow.jagora.Market;
@@ -63,20 +60,17 @@ public class DefaultStockExchange implements StockExchange {
 	
 	@Override
 	public Double getBestOffer(Stock stock) {
-		//TODO
-		return null;
+		return markets.get(stock).getBestOffer();
 	}
 
 	@Override
 	public Double getBestBid(Stock stock) {
-		//TODO
-		return null;
+		return markets.get(stock).getBestBid();
 	}
 	
 	@Override
 	public List<TickEvent<Trade>> getTradeHistory(Stock stock) {
-		//TODO
-		return null;
+		return Collections.unmodifiableList(tradeHistory);
 	}
 
 	@Override
