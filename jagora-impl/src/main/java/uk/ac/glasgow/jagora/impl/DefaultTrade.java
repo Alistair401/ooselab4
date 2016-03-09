@@ -46,7 +46,7 @@ public class DefaultTrade implements Trade {
 		TickEvent<Trade> event = world.createTickEvent(this);
 		buyOrder.satisfyTrade(event);
 		sellOrder.satisfyTrade(event);
-		return world.createTickEvent(this);
+		return event;
 	}
 
 	@Override

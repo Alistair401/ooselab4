@@ -48,12 +48,25 @@ public class ContinuousOrderDrivenMarket implements Market {
 			if (bestBid == null || bestSellOrder == null || bestBid.getPrice() < bestSellOrder.getPrice())
 				break;
 
-			Trade t = new DefaultTrade(world, bestBid, bestSellOrder, stock, Math.min(bestBid.getRemainingQuantity(), bestSellOrder.getRemainingQuantity()), bestSellOrder.getPrice());
-			System.out.println(t);
+			int quantity = Math.min(bestBid.getRemainingQuantity(), bestSellOrder.getRemainingQuantity());
+			Double price = bestSellOrder.getPrice();
+
+			if (bestBid.getTrader().getCash() < quantity * price) {
+				buyBook.cancelOrder(bestBid);
+				continue;
+			}
+
+			if (bestSellOrder.getTrader().getInventoryHolding(stock) < quantity) {
+				sellBook.cancelOrder(bestSellOrder);
+				continue;
+			}
+
+			Trade t = new DefaultTrade(world, bestBid, bestSellOrder, stock, quantity, price);
+
 			try {
 				trades.add(t.execute());
 			} catch (TradeException e) {
-				throw new RuntimeException(t.toString(), e);
+				throw new RuntimeException(e);
 			}
 
 			if (bestBid.getRemainingQuantity() == 0)
@@ -88,12 +101,14 @@ public class ContinuousOrderDrivenMarket implements Market {
 
 	@Override
 	public Double getBestBid() {
-		return buyBook.getBestOrder().getPrice();
+		BuyOrder order = buyBook.getBestOrder();
+		return order == null ? null : order.getPrice();
 	}
 
 	@Override
 	public Double getBestOffer() {
-		return sellBook.getBestOrder().getPrice();
+		SellOrder order = sellBook.getBestOrder();
+		return order == null ? null : order.getPrice();
 	}
 
 	@Override
