@@ -55,7 +55,9 @@ public class DefaultOrderBook<O extends Order & Comparable<O>> implements OrderB
 
 	@Override
 	public List<TickEvent<O>> getOrdersAsList() {
-		return new ArrayList<>(backing);
+		List<TickEvent<O>> events = new ArrayList<>(backing);
+		Collections.sort(events);
+		return events;
 	}
 
 	@Override
