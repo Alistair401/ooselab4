@@ -57,7 +57,10 @@ public class LimitSellOrder implements SellOrder {
 		Double tradePrice = tradeEvent.getEvent().getPrice();
 		if (price > tradePrice){throw new TradeException("Price too low for sale");}
 		if (quantity < tradeQuantity){throw new TradeException("SellOrder is not big enough to satisfy trade");}
-		else {trader.sellStock(stock, tradeQuantity, tradePrice);}
+		else {
+			trader.sellStock(stock, tradeQuantity, tradePrice);
+			quantity -= tradeQuantity;
+		}
 		
 	}
 
