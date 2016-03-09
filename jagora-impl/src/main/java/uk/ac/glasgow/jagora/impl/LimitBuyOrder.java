@@ -64,9 +64,7 @@ public class LimitBuyOrder implements BuyOrder {
 
 	@Override
 	public int compareTo(BuyOrder order) {
-		if (price < order.getPrice()){return -1;}
-		else if (price > order.getPrice()){return 1;}
-		return 0;
+		return price.compareTo(order.getPrice());
 	}
 
 
