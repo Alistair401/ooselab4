@@ -46,7 +46,7 @@ public class ContinuousOrderDrivenMarket implements Market {
 	@Override
 	public List<TickEvent<Trade>> doClearing() {
 		//TODO
-		return null;		
+		return null;
 	}
 
 	@Override

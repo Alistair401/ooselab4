@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import uk.ac.glasgow.jagora.Order;
 import uk.ac.glasgow.jagora.OrderBook;
@@ -24,7 +25,7 @@ public class DefaultOrderBook<O extends Order & Comparable<O>> implements OrderB
 	 * @param world
 	 */
 	public DefaultOrderBook(World world) {
-		this.backing = new PriorityQueue<TickEvent<O>>(new OrderBookComparator());
+		this.backing = new PriorityQueue<>(new OrderBookComparator());
 		this.world = world;
 	}
 
@@ -61,9 +62,8 @@ public class DefaultOrderBook<O extends Order & Comparable<O>> implements OrderB
 	private class OrderBookComparator implements Comparator<TickEvent<O>> {
 
 		@Override
-		public int compare(TickEvent<O> tickEvent1, TickEvent<O> tickEvent2) {
-			//TODO
-			return 0;
+		public int compare(TickEvent<O> a, TickEvent<O> b) {
+			return a.compareTo(b);
 		}
 	}
 

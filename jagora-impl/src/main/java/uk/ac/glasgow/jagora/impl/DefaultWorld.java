@@ -5,7 +5,7 @@ import uk.ac.glasgow.jagora.World;
 
 public class DefaultWorld implements World {
 
-	private Long tickCount = 0l;	
+	private long tickCount = 0;
 
 	@Override
 	public <T> TickEvent<T> createTickEvent(T event) {
