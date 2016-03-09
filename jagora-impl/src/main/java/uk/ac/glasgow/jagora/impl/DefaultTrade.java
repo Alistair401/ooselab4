@@ -48,10 +48,16 @@ public class DefaultTrade implements Trade {
 		sellOrder.satisfyTrade(event);
 		return world.createTickEvent(this);
 	}
-	
-	public String toString(){
-		// TODO
-		return null;
-	}
 
+	@Override
+	public String toString() {
+		return "DefaultTrade{" +
+				"world=" + world +
+				", buyOrder=" + buyOrder +
+				", sellOrder=" + sellOrder +
+				", quantity=" + quantity +
+				", stock=" + stock +
+				", price=" + price +
+				'}';
+	}
 }

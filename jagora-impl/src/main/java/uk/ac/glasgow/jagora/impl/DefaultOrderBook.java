@@ -27,7 +27,7 @@ public class DefaultOrderBook<O extends Order & Comparable<O>> implements OrderB
 		this.backing = new PriorityQueue<TickEvent<O>>(new OrderBookComparator());
 		this.world = world;
 	}
-	
+
 	@Override
 	public void recordOrder(O order) {
 		// TODO
@@ -49,6 +49,14 @@ public class DefaultOrderBook<O extends Order & Comparable<O>> implements OrderB
 		//TODO
 		return null;
 	}
+
+	@Override
+	public String toString() {
+		return "DefaultOrderBook{" +
+				"backing=" + backing +
+				", world=" + world +
+				'}';
+	}
 	
 	private class OrderBookComparator implements Comparator<TickEvent<O>> {
 
@@ -57,12 +65,6 @@ public class DefaultOrderBook<O extends Order & Comparable<O>> implements OrderB
 			//TODO
 			return 0;
 		}
-	}
-	
-	@Override
-	public String toString (){
-		// TODO
-		return null;
 	}
 
 }

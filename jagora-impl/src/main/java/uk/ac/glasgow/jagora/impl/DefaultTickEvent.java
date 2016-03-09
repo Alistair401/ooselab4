@@ -14,12 +14,7 @@ public class DefaultTickEvent<T> implements TickEvent<T> {
 
 	@Override
 	public int compareTo(TickEvent<T> tickEvent) {
-		if (getTick() < tickEvent.getTick()){
-			return -1;
-		} else if (getTick() > tickEvent.getTick()){
-			return 1;
-		}
-		return 0;
+		return Long.compare(getTick(), tickEvent.getTick());
 	}
 
 	@Override
@@ -31,9 +26,12 @@ public class DefaultTickEvent<T> implements TickEvent<T> {
 	public Long getTick() {
 		return tick;
 	}
-	
-	public String toString(){
-		//TODO
-		return null;
+
+	@Override
+	public String toString() {
+		return "DefaultTickEvent{" +
+				"event=" + event +
+				", tick=" + tick +
+				'}';
 	}
 }

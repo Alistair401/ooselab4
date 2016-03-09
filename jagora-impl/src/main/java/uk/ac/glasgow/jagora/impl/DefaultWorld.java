@@ -12,4 +12,10 @@ public class DefaultWorld implements World {
 		return new DefaultTickEvent<T>(event, ++tickCount);
 	}
 
+	@Override
+	public String toString() {
+		return "DefaultWorld{" +
+				"tickCount=" + tickCount +
+				'}';
+	}
 }

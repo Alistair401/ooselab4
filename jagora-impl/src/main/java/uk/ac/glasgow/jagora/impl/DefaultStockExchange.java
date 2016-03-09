@@ -64,4 +64,12 @@ public class DefaultStockExchange implements StockExchange {
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		return "DefaultStockExchange{" +
+				"markets=" + markets +
+				", world=" + world +
+				", tradeHistory=" + tradeHistory +
+				'}';
+	}
 }

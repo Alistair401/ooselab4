@@ -78,10 +78,14 @@ public class ContinuousOrderDrivenMarket implements Market {
 		//TODO
 		return null;
 	}
-	
+
 	@Override
-	public String toString(){
-		//TODO
-		return null;
+	public String toString() {
+		return "ContinuousOrderDrivenMarket{" +
+				"sellBook=" + sellBook +
+				", buyBook=" + buyBook +
+				", stock=" + stock +
+				", world=" + world +
+				'}';
 	}
 }
