@@ -54,7 +54,7 @@ public class LimitBuyOrder implements BuyOrder {
 	}
 
 	@Override
-	public synchronized void satisfyTrade(TickEvent<Trade> tradeEvent) throws TradeException {
+	public void satisfyTrade(TickEvent<Trade> tradeEvent) throws TradeException {
 		int tradeQuantity = tradeEvent.getEvent().getQuantity();
 		Double tradePrice = tradeEvent.getEvent().getPrice();
 		if (tradePrice > price){throw new TradeException("Price too high to for BuyOrder");}

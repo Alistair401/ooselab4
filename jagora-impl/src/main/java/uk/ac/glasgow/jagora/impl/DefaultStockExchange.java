@@ -15,7 +15,7 @@ public class DefaultStockExchange implements StockExchange {
 
 	private Map<Stock, Market> markets = new HashMap<Stock, Market>() {
 		@Override
-		public synchronized Market get(Object s) {
+		public Market get(Object s) {
 			Market m = super.get(s);
 
 			if (m == null) {
