@@ -87,8 +87,7 @@ public class DefaultTrader implements Trader {
 
 	@Override
 	public Set<Stock> getTradingStocks() {
-		// TODO
-		return null;
+		return holding.keySet();
 	}
 
 }

@@ -1,6 +1,7 @@
 package uk.ac.glasgow.jagora.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -66,7 +67,7 @@ public class RandomTrader implements Trader {
 
 	@Override
 	public void buyStock(Stock stock, Integer quantity, Double price) throws TradeException {
-		trader.sellStock(stock, quantity, price);
+		trader.buyStock(stock, quantity, price);
 	}
 
 	@Override
@@ -77,16 +78,17 @@ public class RandomTrader implements Trader {
 	@Override
 	public void speak(StockExchange stockExchange) {
 		boolean buy = random.nextBoolean();
+
+		List<Stock> holding = new ArrayList<>(trader.getTradingStocks());
+		int stockIndex = holding.size() == 1 ? 0 : random.nextInt(holding.size()-1);
+		Stock stock = holding.get(stockIndex);
+		
 		if (buy){
-			List<Stock> holding = new ArrayList<>(trader.getTradingStocks());
-			Stock stock = holding.get(random.nextInt(holding.size()-1));
 			double price = stockExchange.getBestBid(stock) + (random.nextDouble() - 0.5 * priceRange);
 			int quantity = random.nextInt(maxTradeQuantity);
 			stockExchange.placeBuyOrder(new LimitBuyOrder(trader,stock,quantity,price));
 		} else {
-			List<Stock> holding = new ArrayList<>(trader.getTradingStocks());
-			Stock stock = holding.get(random.nextInt(holding.size()-1));
-			double price = stockExchange.getBestBid(stock) + (random.nextDouble() - 0.5 * priceRange);
+			double price = stockExchange.getBestOffer(stock) + (random.nextDouble() - 0.5 * priceRange);
 			int quantity = random.nextInt(maxTradeQuantity);
 			stockExchange.placeSellOrder(new LimitSellOrder(trader,stock,quantity,price));
 		}
@@ -94,8 +96,7 @@ public class RandomTrader implements Trader {
 
 	@Override
 	public Set<Stock> getTradingStocks() {
-		// TODO
-		return null;
+		return trader.getTradingStocks();
 	}
 
 	@Override
