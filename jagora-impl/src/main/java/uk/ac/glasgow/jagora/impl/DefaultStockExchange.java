@@ -23,7 +23,7 @@ public class DefaultStockExchange implements StockExchange {
 
 			if (m == null) {
 				m = new ContinuousOrderDrivenMarket((Stock) s, world);
-				super.put(s, m);
+				super.put((Stock) s, m);
 			}
 
 			return m;
