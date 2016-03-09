@@ -1,10 +1,8 @@
 package uk.ac.glasgow.jagora.impl;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.stream.Collectors;
 
 import uk.ac.glasgow.jagora.Order;
 import uk.ac.glasgow.jagora.OrderBook;
@@ -25,30 +23,38 @@ public class DefaultOrderBook<O extends Order & Comparable<O>> implements OrderB
 	 * @param world
 	 */
 	public DefaultOrderBook(World world) {
-		this.backing = new PriorityQueue<>(new OrderBookComparator());
+		this.backing = new PriorityQueue<>();
 		this.world = world;
 	}
 
 	@Override
 	public void recordOrder(O order) {
-		// TODO
+		backing.add(world.createTickEvent(order));
 	}
 
 	@Override
 	public void cancelOrder(O order) {
-		//TODO
+		Iterator<TickEvent<O>> i = backing.iterator();
+
+		while (i.hasNext()) {
+			TickEvent<O> next = i.next();
+			if (next.getEvent().equals(order)) {
+				i.remove();
+				return;
+			}
+		}
+
+		throw new RuntimeException("Failed to remove " + order + " as it is not in the order book");
 	}
 
 	@Override
 	public O getBestOrder() {
-		//TODO
-		return null;
+		return backing.peek().getEvent();
 	}
 
 	@Override
 	public List<TickEvent<O>> getOrdersAsList() {
-		//TODO
-		return null;
+		return new ArrayList<>(backing);
 	}
 
 	@Override
@@ -57,14 +63,6 @@ public class DefaultOrderBook<O extends Order & Comparable<O>> implements OrderB
 				"backing=" + backing +
 				", world=" + world +
 				'}';
-	}
-	
-	private class OrderBookComparator implements Comparator<TickEvent<O>> {
-
-		@Override
-		public int compare(TickEvent<O> a, TickEvent<O> b) {
-			return a.compareTo(b);
-		}
 	}
 
 }
