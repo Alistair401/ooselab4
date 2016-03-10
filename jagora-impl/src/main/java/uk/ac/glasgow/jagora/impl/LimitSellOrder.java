@@ -103,7 +103,6 @@ public class LimitSellOrder implements SellOrder {
 	}
 
 	@Override
-
 	public int hashCode() {
 		int result = trader != null ? trader.hashCode() : 0;
 		result = 31 * result + (stock != null ? stock.hashCode() : 0);
