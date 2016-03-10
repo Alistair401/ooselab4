@@ -77,20 +77,21 @@ public class RandomTrader implements Trader {
 
 	@Override
 	public void speak(StockExchange stockExchange) {
+		List<Stock> holding = new ArrayList<>(trader.getTradingStocks());
+
+		int quantity = random.nextInt(maxTradeQuantity);
+		int stockIndex = holding.size() == 1 ? 0 : random.nextInt(holding.size()-1);
+		double price = (random.nextDouble() - 0.5) * priceRange;
 		boolean buy = random.nextBoolean();
 
-		List<Stock> holding = new ArrayList<>(trader.getTradingStocks());
-		int stockIndex = holding.size() == 1 ? 0 : random.nextInt(holding.size()-1);
 		Stock stock = holding.get(stockIndex);
-		
-		if (buy){
-			double price = stockExchange.getBestBid(stock) + (random.nextDouble() - 0.5 * priceRange);
-			int quantity = random.nextInt(maxTradeQuantity);
-			stockExchange.placeBuyOrder(new LimitBuyOrder(trader,stock,quantity,price));
+
+		if (buy) {
+			price += stockExchange.getBestBid(stock);
+			stockExchange.placeBuyOrder(new LimitBuyOrder(trader, stock, quantity, price));
 		} else {
-			double price = stockExchange.getBestOffer(stock) + (random.nextDouble() - 0.5 * priceRange);
-			int quantity = random.nextInt(maxTradeQuantity);
-			stockExchange.placeSellOrder(new LimitSellOrder(trader,stock,quantity,price));
+			price += stockExchange.getBestOffer(stock);
+			stockExchange.placeSellOrder(new LimitSellOrder(trader, stock, quantity, price));
 		}
 	}
 
