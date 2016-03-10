@@ -122,12 +122,14 @@ public class ContinuousOrderDrivenMarket implements Market {
 
 	@Override
 	public Double getBestBid() {
+		// For null safety, we must not call getPrice() on a null order, and instead just return null
 		BuyOrder order = buyBook.getBestOrder();
 		return order == null ? null : order.getPrice();
 	}
 
 	@Override
 	public Double getBestOffer() {
+		// For null safety, we must not call getPrice() on a null order, and instead just return null
 		SellOrder order = sellBook.getBestOrder();
 		return order == null ? null : order.getPrice();
 	}
