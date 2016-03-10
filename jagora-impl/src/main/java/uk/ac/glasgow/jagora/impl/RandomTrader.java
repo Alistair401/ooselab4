@@ -78,23 +78,37 @@ public class RandomTrader implements Trader {
 
 	@Override
 	public void speak(StockExchange stockExchange) {
+<<<<<<< HEAD
 		// Decide to buy or not
 		boolean buy = random.nextBoolean();
 
 		// Choose a random stock to buy or sell
+=======
+>>>>>>> 3b190b65117c6954e798c7ee36d92d46d1294a38
 		List<Stock> holding = new ArrayList<>(trader.getTradingStocks());
+
+		int quantity = random.nextInt(maxTradeQuantity);
 		int stockIndex = holding.size() == 1 ? 0 : random.nextInt(holding.size()-1);
+		double price = (random.nextDouble() - 0.5) * priceRange;
+		boolean buy = random.nextBoolean();
+
 		Stock stock = holding.get(stockIndex);
+<<<<<<< HEAD
 		
 		// Detailed in the algorithm given above
 		if (buy){
 			double price = stockExchange.getBestBid(stock) + (random.nextDouble() - 0.5 * priceRange);
 			int quantity = random.nextInt(maxTradeQuantity);
 			stockExchange.placeBuyOrder(new LimitBuyOrder(trader,stock,quantity,price));
+=======
+
+		if (buy) {
+			price += stockExchange.getBestBid(stock);
+			stockExchange.placeBuyOrder(new LimitBuyOrder(trader, stock, quantity, price));
+>>>>>>> 3b190b65117c6954e798c7ee36d92d46d1294a38
 		} else {
-			double price = stockExchange.getBestOffer(stock) + (random.nextDouble() - 0.5 * priceRange);
-			int quantity = random.nextInt(maxTradeQuantity);
-			stockExchange.placeSellOrder(new LimitSellOrder(trader,stock,quantity,price));
+			price += stockExchange.getBestOffer(stock);
+			stockExchange.placeSellOrder(new LimitSellOrder(trader, stock, quantity, price));
 		}
 	}
 

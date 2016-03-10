@@ -22,13 +22,9 @@ public class DefaultStock implements Stock{
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof DefaultStock)) return false;
-
-		DefaultStock that = (DefaultStock) o;
-
-		return name.equals(that.name);
-
+		// Stocks are considered to be equal when they are the same object,
+		// or all fields match
+		return (this == o) || (o instanceof DefaultStock && name.equals(((DefaultStock) o).name));
 	}
 
 	@Override

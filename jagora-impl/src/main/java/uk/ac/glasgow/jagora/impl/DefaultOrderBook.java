@@ -23,6 +23,9 @@ public class DefaultOrderBook<O extends Order & Comparable<O>> implements OrderB
 	 * @param world
 	 */
 	public DefaultOrderBook(World world) {
+		// We do not set a custom comparator here.
+		// TickEvent is a comparable which compares first by contents,
+		// then by time. This allows the PriorityQueue to sort correctly automatically
 		this.backing = new PriorityQueue<>();
 		this.world = world;
 	}
@@ -34,6 +37,11 @@ public class DefaultOrderBook<O extends Order & Comparable<O>> implements OrderB
 
 	@Override
 	public void cancelOrder(O order) {
+		// Unfortunately, this is an O(n) operation.
+		// Given the choice of data structure there doesn't appear to be a faster way
+		// If performance issues occur during real world use,
+		// a different data structure should be chosen.
+
 		Iterator<TickEvent<O>> i = backing.iterator();
 
 		while (i.hasNext()) {
@@ -49,6 +57,7 @@ public class DefaultOrderBook<O extends Order & Comparable<O>> implements OrderB
 
 	@Override
 	public O getBestOrder() {
+		// For null safety, we must only call getEvent() if tickEvent is not null
 		TickEvent<O> tickEvent = backing.peek();
 		return tickEvent == null ? null : tickEvent.getEvent();
 	}
@@ -56,7 +65,12 @@ public class DefaultOrderBook<O extends Order & Comparable<O>> implements OrderB
 	@Override
 	public List<TickEvent<O>> getOrdersAsList() {
 		List<TickEvent<O>> events = new ArrayList<>(backing);
+
+		// Surprisingly, PriorityQueue's iterator is not ordered.
+		// Creating an ArrayList from a collection uses the iterator
+		// so we must also sort here to ensure correct order of the returned list
 		Collections.sort(events);
+
 		return events;
 	}
 

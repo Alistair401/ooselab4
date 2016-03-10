@@ -54,7 +54,7 @@ public class LimitBuyOrder implements BuyOrder {
 	}
 
 	@Override
-	public synchronized void satisfyTrade(TickEvent<Trade> tradeEvent) throws TradeException {
+	public void satisfyTrade(TickEvent<Trade> tradeEvent) throws TradeException {
 		int tradeQuantity = tradeEvent.getEvent().getQuantity();
 		Double tradePrice = tradeEvent.getEvent().getPrice();
 		// Throws an exception if the trade doesn't meet the limit of the BuyOrder
@@ -79,6 +79,10 @@ public class LimitBuyOrder implements BuyOrder {
 
 	@Override
 	public boolean equals(Object o) {
+		// LimitBuyOrders are considered to be equal when:
+		// They are the same instance
+		// or all fields are equal
+
 		if (this == o) return true;
 		if (!(o instanceof LimitBuyOrder)) return false;
 

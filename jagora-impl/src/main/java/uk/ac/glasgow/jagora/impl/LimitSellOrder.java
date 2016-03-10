@@ -57,9 +57,19 @@ public class LimitSellOrder implements SellOrder {
 	public void satisfyTrade(TickEvent<Trade> tradeEvent) throws TradeException {
 		int tradeQuantity = tradeEvent.getEvent().getQuantity();
 		Double tradePrice = tradeEvent.getEvent().getPrice();
-		// TODO: Uncomment this after test bug is fixed/reply from tutor by email?
+
+		// TODO: Uncomment this after test bug is fixed/reply by email?
+		// If the price of the trade is less than our limit price, we should throw an error
+		// however this makes the tests fail as they use a stub trade which
+		// has a price of 0.1, which is less than the limit prices used in tests
+		// this seems to be an error in the tests, but we have not had a reply from Inah yet so are not sure
+
 		// if (tradePrice < price){throw new TradeException("Price too low for sale");}
+<<<<<<< HEAD
 		// Throws an exception if the SellOrder is too small to satisfy the trade
+=======
+
+>>>>>>> 3b190b65117c6954e798c7ee36d92d46d1294a38
 		if (quantity < tradeQuantity){throw new TradeException("SellOrder is not big enough to satisfy trade");}
 		else {
 			// Decrements the quantity and executes the trade for the trader
@@ -80,6 +90,10 @@ public class LimitSellOrder implements SellOrder {
 
 	@Override
 	public boolean equals(Object o) {
+		// LimitSellOrders are considered to be equal when:
+		// They are the same instance
+		// or all fields are equal
+
 		if (this == o) return true;
 		if (!(o instanceof LimitSellOrder)) return false;
 

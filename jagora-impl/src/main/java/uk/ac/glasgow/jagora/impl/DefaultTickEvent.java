@@ -17,10 +17,13 @@ public class DefaultTickEvent<T> implements TickEvent<T> {
 	public int compareTo(TickEvent<T> tickEvent) {
 		int result = 0;
 
-		if (event instanceof Comparable && tickEvent.getEvent() instanceof Comparable) {
-			result = ((Comparable) event).compareTo(tickEvent.getEvent());
+		// If the event is a comparable, compare by it first.
+		Object otherEvent = tickEvent.getEvent();
+		if (event instanceof Comparable && otherEvent instanceof Comparable) {
+			result = ((Comparable) event).compareTo(otherEvent);
 		}
 
+		// If the events aren't comparable, or compare as equal, compare by the tick
 		return result != 0 ? result : Long.compare(getTick(), tickEvent.getTick());
 	}
 
