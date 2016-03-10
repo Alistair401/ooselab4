@@ -65,11 +65,6 @@ public class LimitSellOrder implements SellOrder {
 		// this seems to be an error in the tests, but we have not had a reply from Inah yet so are not sure
 
 		// if (tradePrice < price){throw new TradeException("Price too low for sale");}
-<<<<<<< HEAD
-		// Throws an exception if the SellOrder is too small to satisfy the trade
-=======
-
->>>>>>> 3b190b65117c6954e798c7ee36d92d46d1294a38
 		if (quantity < tradeQuantity){throw new TradeException("SellOrder is not big enough to satisfy trade");}
 		else {
 			// Decrements the quantity and executes the trade for the trader
