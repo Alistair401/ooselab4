@@ -16,7 +16,7 @@ import uk.ac.glasgow.jagora.Trader;
  * place random buy and sell orders within a constrained price range (and up to
  * a maximum quantity) of the current market spread (bestBid, bestOffer). The
  * pseudo code for the trading strategy is as follows:
- * 
+ *
  * <pre>
  * buy <- randomChoice
  * if buy:
@@ -30,18 +30,17 @@ import uk.ac.glasgow.jagora.Trader;
  *   stock <- random (s in inventory)
  *   placeLimitSellOrder(stock, quantity, price)
  * </pre>
- * 
- * @author tws
  *
+ * @author tws
  */
 
 public class RandomTrader implements Trader {
-	
+
 	private Trader trader;
 	private double priceRange;
 	private Integer maxTradeQuantity;
 	private Random random;
-	
+
 	public RandomTrader(String name, Double cash, Stock stock, Integer quantity,
 						Integer maxTradeQuantity, double priceRange, Random random) {
 		// delegates functions to a DefaultTrader
@@ -82,7 +81,7 @@ public class RandomTrader implements Trader {
 		List<Stock> holding = new ArrayList<>(trader.getTradingStocks());
 
 		int quantity = random.nextInt(maxTradeQuantity);
-		int stockIndex = holding.size() == 1 ? 0 : random.nextInt(holding.size()-1);
+		int stockIndex = holding.size() == 1 ? 0 : random.nextInt(holding.size() - 1);
 		double price = (random.nextDouble() - 0.5) * priceRange;
 		boolean buy = random.nextBoolean();
 

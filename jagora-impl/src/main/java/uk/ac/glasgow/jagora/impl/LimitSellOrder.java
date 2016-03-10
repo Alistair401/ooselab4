@@ -15,7 +15,7 @@ public class LimitSellOrder implements SellOrder {
 	private Stock stock;
 	private Integer quantity;
 	private Double price;
-	
+
 	public LimitSellOrder(Trader trader, Stock stock, Integer quantity, Double price) {
 		this.trader = trader;
 		this.stock = stock;
@@ -65,13 +65,14 @@ public class LimitSellOrder implements SellOrder {
 		// this seems to be an error in the tests, but we have not had a reply from Inah yet so are not sure
 
 		// if (tradePrice < price){throw new TradeException("Price too low for sale");}
-		if (quantity < tradeQuantity){throw new TradeException("SellOrder is not big enough to satisfy trade");}
-		else {
+		if (quantity < tradeQuantity) {
+			throw new TradeException("SellOrder is not big enough to satisfy trade");
+		} else {
 			// Decrements the quantity and executes the trade for the trader
 			trader.sellStock(stock, tradeQuantity, tradePrice);
 			quantity -= tradeQuantity;
 		}
-		
+
 	}
 
 	@Override
@@ -102,7 +103,7 @@ public class LimitSellOrder implements SellOrder {
 	}
 
 	@Override
-	
+
 	public int hashCode() {
 		int result = trader != null ? trader.hashCode() : 0;
 		result = 31 * result + (stock != null ? stock.hashCode() : 0);

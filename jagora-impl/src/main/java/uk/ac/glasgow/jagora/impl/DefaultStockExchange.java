@@ -16,11 +16,11 @@ public class DefaultStockExchange implements StockExchange {
 	private Map<Stock, Market> markets = new HashMap<>();
 	private World world;
 	private List<TickEvent<Trade>> tradeHistory = new ArrayList<>();
-	
-	public DefaultStockExchange(World world){
+
+	public DefaultStockExchange(World world) {
 		this.world = world;
 	}
-	
+
 	@Override
 	// Iterates through all stock markets and execute clearing on them
 	public void doClearing() {
@@ -32,6 +32,7 @@ public class DefaultStockExchange implements StockExchange {
 
 	/**
 	 * Gets (or creates if necessary) the market for a given stock
+	 *
 	 * @return market associated with the given stock
 	 */
 	private Market getOrCreateMarket(Stock stock) {
@@ -57,7 +58,7 @@ public class DefaultStockExchange implements StockExchange {
 	public void cancelSellOrder(SellOrder sellOrder) {
 		getOrCreateMarket(sellOrder.getStock()).cancelSellOrder(sellOrder);
 	}
-	
+
 	@Override
 	public Double getBestOffer(Stock stock) {
 		return getOrCreateMarket(stock).getBestOffer();
@@ -67,7 +68,7 @@ public class DefaultStockExchange implements StockExchange {
 	public Double getBestBid(Stock stock) {
 		return getOrCreateMarket(stock).getBestBid();
 	}
-	
+
 	@Override
 	public List<TickEvent<Trade>> getTradeHistory(Stock stock) {
 		// Return an immutable list of the trade history, so it can't be mucked with by other classes

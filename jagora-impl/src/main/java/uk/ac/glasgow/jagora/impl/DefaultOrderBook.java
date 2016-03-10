@@ -11,15 +11,17 @@ import uk.ac.glasgow.jagora.World;
 
 /**
  * Provides the default implementation of an order book for sorting buy and sell orders.
+ *
  * @author tws
  */
 public class DefaultOrderBook<O extends Order & Comparable<O>> implements OrderBook<O> {
 
 	private final Queue<TickEvent<O>> backing;
 	private World world;
-	
+
 	/**
 	 * Constructs a new instance of the order book synchronized to the ticks of the specified world.
+	 *
 	 * @param world
 	 */
 	public DefaultOrderBook(World world) {

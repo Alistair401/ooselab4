@@ -8,20 +8,20 @@ import uk.ac.glasgow.jagora.*;
 
 /**
  * Provides the behaviour of a continuous order driven market.
- * @author tws
  *
+ * @author tws
  */
 public class ContinuousOrderDrivenMarket implements Market {
-	
+
 	private OrderBook<SellOrder> sellBook;
 	private OrderBook<BuyOrder> buyBook;
 	private Stock stock;
 	private World world;
-	
+
 	/**
 	 * Constructs a new continuous order driven market for the specified stock,
 	 * synchronised to the tick events of the specified world.
-	 * 
+	 *
 	 * @param stock
 	 * @param world
 	 */

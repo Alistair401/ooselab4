@@ -6,7 +6,7 @@ public class DefaultTickEvent<T> implements TickEvent<T> {
 
 	private T event;
 	private Long tick;
-	
+
 	public DefaultTickEvent(T event, Long tick) {
 		this.event = event;
 		this.tick = tick;

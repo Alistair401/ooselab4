@@ -10,7 +10,7 @@ import uk.ac.glasgow.jagora.Trader;
 import java.util.Objects;
 
 public class LimitBuyOrder implements BuyOrder {
-	
+
 	private Trader trader;
 	private Stock stock;
 	private Integer quantity;
@@ -58,10 +58,13 @@ public class LimitBuyOrder implements BuyOrder {
 		int tradeQuantity = tradeEvent.getEvent().getQuantity();
 		Double tradePrice = tradeEvent.getEvent().getPrice();
 		// Throws an exception if the trade doesn't meet the limit of the BuyOrder
-		if (tradePrice > price){throw new TradeException("Price too high for BuyOrder");}
+		if (tradePrice > price) {
+			throw new TradeException("Price too high for BuyOrder");
+		}
 		// Throws an exception if the BuyOrder is not big enough to satisfy the trade
-		if (quantity < tradeQuantity){throw new TradeException("BuyOrder not big enough to satisfy trade");}
-		else {
+		if (quantity < tradeQuantity) {
+			throw new TradeException("BuyOrder not big enough to satisfy trade");
+		} else {
 			// Update and execute the trade
 			trader.buyStock(stock, tradeQuantity, tradePrice);
 			quantity -= tradeQuantity;
