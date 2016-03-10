@@ -75,6 +75,10 @@ public class LimitBuyOrder implements BuyOrder {
 
 	@Override
 	public boolean equals(Object o) {
+		// LimitBuyOrders are considered to be equal when:
+		// They are the same instance
+		// or all fields are equal
+
 		if (this == o) return true;
 		if (!(o instanceof LimitBuyOrder)) return false;
 

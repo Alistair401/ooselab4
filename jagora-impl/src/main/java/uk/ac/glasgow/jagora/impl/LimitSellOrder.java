@@ -84,6 +84,10 @@ public class LimitSellOrder implements SellOrder {
 
 	@Override
 	public boolean equals(Object o) {
+		// LimitSellOrders are considered to be equal when:
+		// They are the same instance
+		// or all fields are equal
+
 		if (this == o) return true;
 		if (!(o instanceof LimitSellOrder)) return false;
 
