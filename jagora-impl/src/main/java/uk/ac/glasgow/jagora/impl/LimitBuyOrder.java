@@ -57,15 +57,19 @@ public class LimitBuyOrder implements BuyOrder {
 	public synchronized void satisfyTrade(TickEvent<Trade> tradeEvent) throws TradeException {
 		int tradeQuantity = tradeEvent.getEvent().getQuantity();
 		Double tradePrice = tradeEvent.getEvent().getPrice();
-		if (tradePrice > price){throw new TradeException("Price too high to for BuyOrder");}
+		// Throws an exception if the trade doesn't meet the limit of the BuyOrder
+		if (tradePrice > price){throw new TradeException("Price too high for BuyOrder");}
+		// Throws an exception if the BuyOrder is not big enough to satisfy the trade
 		if (quantity < tradeQuantity){throw new TradeException("BuyOrder not big enough to satisfy trade");}
 		else {
+			// Update and execute the trade
 			trader.buyStock(stock, tradeQuantity, tradePrice);
 			quantity -= tradeQuantity;
 		}
 	}
 
 	@Override
+	// Opposite of above
 	public void rollBackTrade(TickEvent<Trade> tradeEvent) throws TradeException {
 		int tradeQuantity = tradeEvent.getEvent().getQuantity();
 		Double tradePrice = tradeEvent.getEvent().getPrice();
@@ -84,7 +88,6 @@ public class LimitBuyOrder implements BuyOrder {
 				Objects.equals(quantity, that.quantity) &&
 				Objects.equals(price, that.price) &&
 				Objects.equals(stock, that.stock);
-
 	}
 
 	@Override

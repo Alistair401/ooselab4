@@ -59,8 +59,10 @@ public class LimitSellOrder implements SellOrder {
 		Double tradePrice = tradeEvent.getEvent().getPrice();
 		// TODO: Uncomment this after test bug is fixed/reply from tutor by email?
 		// if (tradePrice < price){throw new TradeException("Price too low for sale");}
+		// Throws an exception if the SellOrder is too small to satisfy the trade
 		if (quantity < tradeQuantity){throw new TradeException("SellOrder is not big enough to satisfy trade");}
 		else {
+			// Decrements the quantity and executes the trade for the trader
 			trader.sellStock(stock, tradeQuantity, tradePrice);
 			quantity -= tradeQuantity;
 		}
@@ -68,6 +70,7 @@ public class LimitSellOrder implements SellOrder {
 	}
 
 	@Override
+	// Does the opposite of above
 	public void rollBackTrade(TickEvent<Trade> tradeEvent) throws TradeException {
 		int tradeQuantity = tradeEvent.getEvent().getQuantity();
 		Double tradePrice = tradeEvent.getEvent().getPrice();
@@ -90,6 +93,7 @@ public class LimitSellOrder implements SellOrder {
 	}
 
 	@Override
+	
 	public int hashCode() {
 		int result = trader != null ? trader.hashCode() : 0;
 		result = 31 * result + (stock != null ? stock.hashCode() : 0);

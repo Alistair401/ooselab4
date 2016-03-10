@@ -44,6 +44,7 @@ public class RandomTrader implements Trader {
 	
 	public RandomTrader(String name, Double cash, Stock stock, Integer quantity,
 						Integer maxTradeQuantity, double priceRange, Random random) {
+		// delegates functions to a DefaultTrader
 		this.trader = new DefaultTrader(name, cash, stock, quantity);
 		this.priceRange = priceRange;
 		this.maxTradeQuantity = maxTradeQuantity;
@@ -77,12 +78,15 @@ public class RandomTrader implements Trader {
 
 	@Override
 	public void speak(StockExchange stockExchange) {
+		// Decide to buy or not
 		boolean buy = random.nextBoolean();
 
+		// Choose a random stock to buy or sell
 		List<Stock> holding = new ArrayList<>(trader.getTradingStocks());
 		int stockIndex = holding.size() == 1 ? 0 : random.nextInt(holding.size()-1);
 		Stock stock = holding.get(stockIndex);
 		
+		// Detailed in the algorithm given above
 		if (buy){
 			double price = stockExchange.getBestBid(stock) + (random.nextDouble() - 0.5 * priceRange);
 			int quantity = random.nextInt(maxTradeQuantity);

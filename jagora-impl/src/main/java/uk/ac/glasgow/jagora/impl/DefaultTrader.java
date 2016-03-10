@@ -20,6 +20,7 @@ public class DefaultTrader implements Trader {
 	private String name;
 	private Double cash;
 	private Integer quantity;
+	// Stores the trader's stock holdings
 	private HashMap<Stock, Integer> holding = new HashMap<>();
 
 	/**
@@ -49,6 +50,7 @@ public class DefaultTrader implements Trader {
 	}
 
 	@Override
+	// Update stock quantities in the trader's holding and update cash
 	public void sellStock(Stock stock, Integer quantity, Double price) throws TradeException {
 		if (!holding.containsKey(stock)){throw new TradeException("Trader does not have this stock",this);}
 		if (holding.get(stock) < quantity){throw new TradeException("Trader does not have enough of this stock",this);}
@@ -57,6 +59,7 @@ public class DefaultTrader implements Trader {
 	}
 
 	@Override
+	// Update stock quantities in the trader's holding and update cash
 	public void buyStock(Stock stock, Integer quantity, Double price) throws TradeException {
 		if (cash < quantity * price){throw new TradeException("Trader doesn't have enough cash for trade", this);}
 		if (holding.containsKey(stock)){holding.replace(stock,holding.get(stock)+quantity);}
@@ -72,7 +75,8 @@ public class DefaultTrader implements Trader {
 
 	@Override
 	public void speak(StockExchange stockExchange) {
-		// TODO
+		// DefaultTrader doesn't do this
+		// Implemented in RandomTrader
 	}
 
 	@Override

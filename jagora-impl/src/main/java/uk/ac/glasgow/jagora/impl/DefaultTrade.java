@@ -42,6 +42,7 @@ public class DefaultTrade implements Trade {
 	}
 
 	@Override
+	// Executes the trade by calling functions on the buyOrder and sellOrder
 	public TickEvent<Trade> execute() throws TradeException {
 		TickEvent<Trade> event = world.createTickEvent(this);
 		buyOrder.satisfyTrade(event);

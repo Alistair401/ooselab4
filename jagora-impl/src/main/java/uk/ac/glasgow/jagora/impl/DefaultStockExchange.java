@@ -34,6 +34,7 @@ public class DefaultStockExchange implements StockExchange {
 	}
 	
 	@Override
+	// Iterates through all stock markets and execute clearing on them
 	public void doClearing() {
 		for (Map.Entry<Stock, Market> stockMarketEntry : markets.entrySet()) {
 			tradeHistory.addAll(stockMarketEntry.getValue().doClearing());
